@@ -9,123 +9,139 @@
       this.socket = socket;
       this.awesomeThings = [];
       $scope.stringVal  = ""; 
-      $scope.stringVal1  = [];   
+      $scope.stringValTask1  = [];   
       $scope.task1Visible = false;
       $scope.task2Visible = false;
       $scope.task3Visible = false;
       $scope.task4Visible = false;
 
 
-    $scope.task3 = function() {
-      $scope.task1Visible = false;
-      $scope.task2Visible = false;
-      $scope.task3Visible = true;
-      $scope.task4Visible = false;
-      
-     
-      $scope.chartSeries = [
-        {"name": "Answer-Yes", "data": response},
-      ];
+      $scope.task3 = function() {
+        $scope.task1Visible = false;
+        $scope.task2Visible = false;
+        $scope.task3Visible = true;
+        $scope.task4Visible = false;
+        
+       
+        $scope.chartSeries = [
+          {"name": "Answer-Yes", "data": response},
+        ];
 
-      
-      $scope.chartConfig = {
-        options: {
-          chart: {
-            type: 'line'
-          },
-          plotOptions: {
-            series: {
-              stacking: ''
+        
+        $scope.chartConfig = {
+          options: {
+            chart: {
+              type: 'line'
+            },
+            plotOptions: {
+              series: {
+                stacking: ''
+              }
             }
+          },
+          series: $scope.chartSeries,
+          xAxis: {
+              categories: uniqueDates
+            },
+          yAxis: {
+              title: {
+                  text: 'Percentage %'
+              }
+            },  
+          title: {
+            text: 'GFK Chart'
+          },
+          credits: {
+            enabled: true
+          },
+          loading: false,
+          size: {}
+        }
+      }////end of function Task 3
+
+      $scope.task1 = function() {
+        $scope.task1Visible = true;
+        $scope.task2Visible = false;
+        $scope.task3Visible = false;
+        $scope.task4Visible = false;
+        var strNum = " ";
+        var isDirty = false;
+        for (var i = 1; i<=100; i++){
+          strNum = "";
+          isDirty = false;
+          if (i % 3 === 0){
+            strNum += "Bizz";
+            isDirty = true;
           }
-        },
-        series: $scope.chartSeries,
-        xAxis: {
-            categories: uniqueDates
-          },
-        yAxis: {
-            title: {
-                text: 'Percentage %'
-            }
-          },  
-        title: {
-          text: 'GFK Chart'
-        },
-        credits: {
-          enabled: true
-        },
-        loading: false,
-        size: {}
-      }
-
-
-
-    }////end of function Task 2
-
-    $scope.task1 = function() {
-      $scope.task1Visible = true;
-      $scope.task2Visible = false;
-      $scope.task3Visible = false;
-      $scope.task4Visible = false;
-      var strNum = " ";
-      var isDirty = false;
-      // var stringVal1 = []
-      for (var i = 1; i<=100; i++){
-        strNum = "";
-        isDirty = false;
-        if (i % 3 === 0){
-          strNum += "Bizz";
-          isDirty = true;
+          if (i % 5 === 0){
+            strNum += "Appz";
+            isDirty = true;
+          }
+          if (isDirty === false){
+            strNum += i;
+          }
+          strNum += " ";
+          $scope.stringValTask1[i]  = strNum;
         }
-        if (i % 5 === 0){
-          strNum += "Appz";
-          isDirty = true;
-        }
-        if (isDirty === false){
-          strNum += i;
-        }
-        strNum += " ";
-        $scope.stringVal1[i]  = strNum;
-      }
-      console.log('stringVal1');
-      console.log($scope.stringVal1);
+      }////end of task 1
 
-    }////end of task 1
+      $scope.task4 = function() {
+        $scope.task1Visible = false;
+        $scope.task2Visible = false;
+        $scope.task3Visible = false;
+        $scope.task4Visible = true;
+        var first ="";
+        var second ="";
+        $.ajax({
+          // console.log("hi there");
+          type: 'GET',
+          url: "https://cdn.gfkdaphne.com/tests/async.php?a=1",
+          dataType: "html",
+          success: function (result) {
+            first = result;
+            $.ajax({
+                type: 'GET',
+                url: "https://cdn.gfkdaphne.com/tests/async.php?a=2",
+                dataType: "html",
+                success: function (response) {
+                  second = response;
+                  display();
 
-
-    
-    // // $scope.task2 = function() {
-          
-    // //     $http({
-    // //       method: 'GET',
-    // //       url: 'http://cdn.gfkdaphne.com/tests/async.php?a=1',
-    // //       dataType: 'jsonp',
-    // //       headers: {
-    // //         'Content-type': 'text/html'
-    // //       }
-    // //     })
-    // //     .then(function successCallback(response) {
-    // //         console.log(response.data);
-    // //         // this callback will be called asynchronously
-    // //         // when the response is available
-    // //     }, function errorCallback(response) {
-    // //         // called asynchronously if an error occurs
-    // //         // or server returns response with an error status.
-    // //         });
-    // //   }  
-    // }
-
-     // $scope.task4 = function() {
+                }
+            });     
+          }
+        });
+        function display(){
+          $("#task4").html(first + " " + second);
+        } 
+      } 
        
-     //    highchartsNG.getHighcharts().then(function(Highcharts){
-     //    // init chart config, see lazyload example
-     //    });   
-       
-     //  }  
-    
-    }//end of     constructor($http, $scope, socket) {
 
-  }// end of   class MainController {
+
+      // // $scope.task2 = function() {
+            
+      // //     $http({
+      // //       method: 'GET',
+      // //       url: 'http://cdn.gfkdaphne.com/tests/async.php?a=1',
+      // //       dataType: 'jsonp',
+      // //       headers: {
+      // //         'Content-type': 'text/html'
+      // //       }
+      // //     })
+      // //     .then(function successCallback(response) {
+      // //         console.log(response.data);
+      // //         // this callback will be called asynchronously
+      // //         // when the response is available
+      // //     }, function errorCallback(response) {
+      // //         // called asynchronously if an error occurs
+      // //         // or server returns response with an error status.
+      // //         });
+      // //   }  
+      // }
+    
+  }//end of     constructor($http, $scope, socket) {
+
+}// end of   class MainController {
 
   var uniqueDates= [];
   var response= [];
@@ -194,7 +210,7 @@
           });
         }
       };
-  });
+    });
 })();
 
 
