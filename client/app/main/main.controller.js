@@ -16,10 +16,10 @@
       $scope.task4Visible = false;
 
 
-    $scope.task2 = function() {
+    $scope.task3 = function() {
       $scope.task1Visible = false;
-      $scope.task2Visible = true;
-      $scope.task3Visible = false;
+      $scope.task2Visible = false;
+      $scope.task3Visible = true;
       $scope.task4Visible = false;
       
      
@@ -93,34 +93,7 @@
     }////end of task 1
 
 
-    // $scope.task1 = function() {
-    //   $scope.task1Visible = true;
-    //   $scope.task2Visible = false;
-    //   $scope.task3Visible = false;
-    //   $scope.task4Visible = false;
-      
-    //   var strNum = " ";
-    //   var isDirty = false;
-    //   for (var i = 1; i<=100; i++){
-    //     isDirty = false;
-    //     if (i % 3 === 0){
-    //       strNum += "Bizz";
-    //       isDirty = true;
-    //     }
-    //     if (i % 5 === 0){
-    //       strNum += "Appz";
-    //       isDirty = true;
-    //     }
-    //     if (isDirty === false){
-    //       strNum += i;
-    //     }
-    //     strNum += " ";
-    //   }
-    //   console.log(strNum);
-    //   $scope.stringVal  = strNum;
-    // }////end of task 1
-
-
+    
     // // $scope.task2 = function() {
           
     // //     $http({
@@ -155,15 +128,8 @@
   }// end of   class MainController {
 
   var uniqueDates= [];
-  var dates1= [];
-  var ids= [];
-  var response= [1,2,3,4,5,6,7,8,9,10,11,12];
-
-  var numberOfRows;
-  var numberOfCoulumns;
-  var numberOfDates;
-
-   
+  var response= [];
+ 
   angular.module('gfkApp')
     .component('main', {
       templateUrl: 'app/main/main.html',
@@ -182,101 +148,45 @@
               var r = new FileReader();
               r.onload = function(e) {
                   var contents = e.target.result;
-                  // console.log('contents');
-                  // console.log(contents);
                   scope.$apply(function () {
                     scope.fileReader = contents;
                     var rows = scope.fileReader.split("\n");
-                    // console.log('rows');
-                    numberOfRows = rows.length;
-                    var MultiArray = new Array(numberOfRows);
+                    var numberOfRows = rows.length;
+                    var csvArray = new Array(numberOfRows);
                     for (var i = 0; i < numberOfRows; i++) {
-                       // console.log(rows[i].split(";"));
                        var columns = rows[i].split(";");
-                       // dates[i] = columns[0];
-                       // ids[i] = columns[1];
-                       // response[i] = columns[2];
-
+                     
                        //creating 2D array
-                       numberOfCoulumns = columns.length;
-                        MultiArray [i] = new Array(numberOfCoulumns);
+                       var numberOfCoulumns = columns.length;
+                        csvArray [i] = new Array(numberOfCoulumns);
                         for (var j = 0; j < numberOfCoulumns; j++) {
-                          // console.log(row[j]);
-                          MultiArray [i][j] = columns[j];
+                          csvArray [i][j] = columns[j];
                         }
-
-
                     }
-                    // create array with all the dates
-                    // var x = 0;
-                    // for(var k = 0; k < numberOfRows; k++){
-                    //     dates1[k] = MultiArray [k][x];
-                    //     console.log("dates1");
-                    //     console.log(dates1);
-                    //     // console.log(MultiArray [k][x]);
-                    // }
-
+                    
                     //creating array with unique dates
                     for(var z = 1; z < numberOfRows; z++){
-                      if (uniqueDates.indexOf(MultiArray[z][0]) == -1) {
-                        uniqueDates.push(MultiArray[z][0]);
+                      if (uniqueDates.indexOf(csvArray[z][0]) == -1) {
+                        uniqueDates.push(csvArray[z][0]);
                       }   
                     } 
-                    numberOfDates = uniqueDates.length;
-
+                    var numberOfDates = uniqueDates.length;
                     var yesCounter=[];
                     var totalRecordsInDateCounter=[]
                     var percentageArray=[]
-                    for(var m = 0; m<numberOfDates; m++){
+                    for(var m = 0; m<numberOfDates; m++){//loops through each unique dare
                       yesCounter[m] = 0;
                       totalRecordsInDateCounter[m] = 0;
-                      for(var z = 1; z < numberOfRows; z++){
-                        
-                        // console.log("array dates");
-                        // console.log(MultiArray[z][0]);
-                        // console.log("unique dates");
-                        // console.log(uniqueDates[m]);
-                        // console.log(MultiArray[z][0] == uniqueDates[m]);
-                        if (MultiArray[z][0] == uniqueDates[m]){
-                          // console.log("inside first if");
-                          // console.log(z);
-                          // console.log(m);
-                          // console.log(MultiArray[z][2]);
-
-                          if (MultiArray[z][2] == MultiArray[1][2]){
-                          // console.log("inside second if");
-                          // console.log(z);
-                          // console.log(m);                            
-                          yesCounter[m] += 1;
-                          // console.log("yescounter" + yesCounter[m]);
-
+                      for(var z = 1; z < numberOfRows; z++){//loops through all the records in CSV
+                        if (csvArray[z][0] == uniqueDates[m]){//match the date in unique dates with date of CSVif date matches then
+                          if (csvArray[z][2] == csvArray[1][2]){//check if the response is yes
+                          yesCounter[m] += 1;//update yes counter if response is yes
                           }
-                        totalRecordsInDateCounter[m]++;
-  
+                        totalRecordsInDateCounter[m]++;//update the total counter in any case
                         }                
-
                       }
-                        percentageArray[m] = yesCounter[m]*100/totalRecordsInDateCounter[m];
-
-                    }
-                    // console.log("yesCounter");
-                    // console.log(yesCounter);
-                    // console.log(percentageArray);
-
-
-
-
-                    // for(var z = 1; z < numberOfRows; z++){
-                    //   if (dates.indexOf(dates1[z]) == -1) {
-                    //     dates.push(dates1[z]);
-                    //   }   
-                    //         // console.log(MultiArray [k][x]);
-                    // } 
-
-                    // console.log("unique dates");
-                    // console.log(uniqueDates);
-
-                    // console.log(scope.fileReader);
+                      response[m] = yesCounter[m]*100/totalRecordsInDateCounter[m];//calculate the percentage of yes respnse for the given date
+                    }                  
                   });
               };
               r.readAsText(files[0]);
