@@ -31,12 +31,16 @@
         <button type="submit" class="btn btn-primary" ng-click="$ctrl.task4()"> Task 4</button>
       <!-- </span>{{stringVal}}<span> -->
       </span>
+      <div ng-show = "task1Visible" ng-repeat="m in stringVal1 track by $index">
+        {{m}}
+      </div>
+      <!-- <div ng-show = "task2Visible"> -->
+      <div ng-show = true>
       <span>
         <input type="file" file-reader="fileContent" />
-        <div>{{fileContent}}</div>
       </span>  
-      <span>
-        <highchart id="chart1" config="chartConfig"></highchart>
-      </span>
+      <highchart id="chart1" config="chartConfig"></highchart>
+    </div>
+
   </form>
 </div>
