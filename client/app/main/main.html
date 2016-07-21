@@ -11,15 +11,38 @@
       <div ng-show = "task1Visible" ng-repeat="m in stringValTask1 track by $index">
         {{m}}
       </div>
-      <div ng-show = "task4Visible" id="task4">
-        
-      </div>
-      <!-- <div ng-show = "task2Visible"> -->
       <div ng-show = "task3Visible">
-      <span>
         <input type="file" file-reader="fileContent" />
-      </span>  
       <highchart id="chart1" config="chartConfig"></highchart>
+    </div>
+    <div ng-show = "task4Visible" id="task4">        
+      </div>
+     
+    <div ng-show = "task2Visible">
+    <p>
+      //The code of JS function is as below
+       function Animal(voice){ 
+        this.voice = voice
+        }
+        Animal.prototype.speak = function(){
+          console.log(this.voice);
+        }
+        function Cat(name, voice){
+          Animal.call(this,voice)
+          this.name = name;
+        }
+        Cat.prototype = Object.create(Animal.prototype)
+        Cat.prototype.constructor = Cat
+        var fluff = new Cat('fluffy','meow');
+
+        fluff.speak();
+        console.log(fluff instanceof Cat)//returns True
+        console.log(fluff instanceof Animal)//returns True
+        //The class is Animal with method speak. Another class Cat extends the Animal class. 
+        //The class Cat has an instance created as fluff whcih returns true for instanceof for both Cat and Animal
+        //Also this instance can call the method speak of class Animal
+        //please check the console for results
+    </p>
     </div>
 
   </form>

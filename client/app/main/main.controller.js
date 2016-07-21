@@ -16,6 +16,60 @@
       $scope.task4Visible = false;
 
 
+
+      $scope.task1 = function() {
+        $scope.task1Visible = true;
+        $scope.task2Visible = false;
+        $scope.task3Visible = false;
+        $scope.task4Visible = false;
+        var strNum = " ";
+        var isDirty = false;
+        for (var i = 1; i<=100; i++){
+          strNum = "";
+          isDirty = false;
+          if (i % 3 === 0){
+            strNum += "Bizz";
+            isDirty = true;
+          }
+          if (i % 5 === 0){
+            strNum += "Appz";
+            isDirty = true;
+          }
+          if (isDirty === false){
+            strNum += i;
+          }
+          strNum += " ";
+          $scope.stringValTask1[i]  = strNum;
+        }
+      }////end of task 1
+
+      $scope.task2 = function() {
+        $scope.task1Visible = false;
+        $scope.task2Visible = true;
+        $scope.task3Visible = false;
+        $scope.task4Visible = false;
+        function Animal(voice){
+        this.voice = voice
+        }
+        Animal.prototype.speak = function(){
+          console.log(this.voice);
+        }
+        function Cat(name, voice){
+          Animal.call(this,voice)
+          this.name = name;
+        }
+        Cat.prototype = Object.create(Animal.prototype)
+        Cat.prototype.constructor = Cat
+        var fluff = new Cat('fluffy','meow');
+        
+        fluff.speak();
+        console.log(fluff instanceof Cat)//returns True
+        console.log(fluff instanceof Animal)//returns True
+        //The class is Animal with method speak. Another class Cat extends the Animal class. 
+        //The class Cat has an instance created as fluff whcih returns true for instanceof for both Cat and Animal
+        //Also this instance can call the method speak of class Animal
+      }////end of function Task 2
+            
       $scope.task3 = function() {
         $scope.task1Visible = false;
         $scope.task2Visible = false;
@@ -59,31 +113,6 @@
         }
       }////end of function Task 3
 
-      $scope.task1 = function() {
-        $scope.task1Visible = true;
-        $scope.task2Visible = false;
-        $scope.task3Visible = false;
-        $scope.task4Visible = false;
-        var strNum = " ";
-        var isDirty = false;
-        for (var i = 1; i<=100; i++){
-          strNum = "";
-          isDirty = false;
-          if (i % 3 === 0){
-            strNum += "Bizz";
-            isDirty = true;
-          }
-          if (i % 5 === 0){
-            strNum += "Appz";
-            isDirty = true;
-          }
-          if (isDirty === false){
-            strNum += i;
-          }
-          strNum += " ";
-          $scope.stringValTask1[i]  = strNum;
-        }
-      }////end of task 1
 
       $scope.task4 = function() {
         $scope.task1Visible = false;
@@ -92,8 +121,8 @@
         $scope.task4Visible = true;
         var first ="";
         var second ="";
+        display("Retrieving text from links...");
         $.ajax({
-          // console.log("hi there");
           type: 'GET',
           url: "https://cdn.gfkdaphne.com/tests/async.php?a=1",
           dataType: "html",
@@ -105,43 +134,17 @@
                 dataType: "html",
                 success: function (response) {
                   second = response;
-                  display();
-
+                  display(first + " " + second);
                 }
             });     
           }
         });
-        function display(){
-          $("#task4").html(first + " " + second);
+        function display(message){
+          $("#task4").html(message);
         } 
       } 
-       
-
-
-      // // $scope.task2 = function() {
-            
-      // //     $http({
-      // //       method: 'GET',
-      // //       url: 'http://cdn.gfkdaphne.com/tests/async.php?a=1',
-      // //       dataType: 'jsonp',
-      // //       headers: {
-      // //         'Content-type': 'text/html'
-      // //       }
-      // //     })
-      // //     .then(function successCallback(response) {
-      // //         console.log(response.data);
-      // //         // this callback will be called asynchronously
-      // //         // when the response is available
-      // //     }, function errorCallback(response) {
-      // //         // called asynchronously if an error occurs
-      // //         // or server returns response with an error status.
-      // //         });
-      // //   }  
-      // }
-    
-  }//end of     constructor($http, $scope, socket) {
-
-}// end of   class MainController {
+  }//end of constructor
+}// end of class MainController
 
   var uniqueDates= [];
   var response= [];
